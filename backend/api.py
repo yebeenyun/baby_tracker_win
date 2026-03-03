@@ -1,8 +1,8 @@
 import sqlite3
 from typing import Optional, List, Dict, Any
 
-from backend.constants import DB_PATH
-from backend.type import DiaperId, DateTimeStr, DiaperRow, ProfileId, FeedingId, FeedingRow, DateStr, Gender, ProfileRow
+from constants import DB_PATH
+from type import DiaperId, DateTimeStr, DiaperRow, ProfileId, FeedingId, FeedingRow, DateStr, Gender, ProfileRow
 
 
 class Api:

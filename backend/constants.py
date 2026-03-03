@@ -1,1 +1,5 @@
 DB_PATH = "baby.db"
+URL="http://localhost:3000"
+APP_NAME = "BABY_TRACKER"
+DESKTOP_WIDTH = 1000
+DESKTOP_HEIGHT = 700
