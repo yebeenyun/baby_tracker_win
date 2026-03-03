@@ -1,5 +1,11 @@
-from fastapi import FastAPI, Depends
+from datetime import datetime
+import os
+from uuid import uuid4
+from fastapi import FastAPI, Depends, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+
+from .constants import API_URL, UI_URL, UPLOAD_DIR
 
 from .database import Base, engine, SessionLocal
 from . import models, schemas, crud
@@ -7,7 +13,16 @@ from . import models, schemas, crud
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        UI_URL,
+        API_URL,
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
@@ -17,10 +32,41 @@ def get_db():
         db.close()
 
 
-@app.post("/child/")
-def create_child(data: schemas.ChildCreate, db: Session = Depends(get_db)):
-    return crud.create_child(db, data)
+@app.post("/child/", response_model=schemas.ChildResponse)
+async def create_child(
+    name: str = Form(...),
+    birth_date: str = Form(...),
+    gender: str = Form(None),
+    photo: UploadFile = File(None),
+    db: Session = Depends(get_db),
+):
+    photo_path = None
 
+    # 🔹 사진 저장
+    if photo:
+        ext = photo.filename.split(".")[-1]
+        filename = f"{uuid4()}.{ext}"
+        file_location = os.path.join(UPLOAD_DIR, filename)
+        if not os.path.exists(UPLOAD_DIR):
+            os.makedirs(UPLOAD_DIR)
+        with open(file_location, "wb") as buffer:
+            buffer.write(await photo.read())
+
+        photo_path = f"/uploads/{filename}"
+
+    # 🔹 DB 저장
+    child = models.Child(
+        name=name,
+        birth_date=datetime.strptime(birth_date, "%Y-%m-%d"),
+        gender=gender,
+        photo=photo_path,
+    )
+
+    db.add(child)
+    db.commit()
+    db.refresh(child)
+
+    return child
 
 @app.get("/child/")
 def get_children(db: Session = Depends(get_db)):

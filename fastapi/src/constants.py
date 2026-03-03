@@ -1,1 +1,5 @@
 DATABASE_URL = "sqlite:///./baby.db"
+UPLOAD_DIR = "images"
+UI_URL = "http://localhost:5173"
+API_URL = "http://127.0.0.1:5173"
+UPLOAD_DIR="images"

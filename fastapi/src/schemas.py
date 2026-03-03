@@ -32,3 +32,18 @@ class GrowthCreate(BaseModel):
     date: date
     height: Optional[float]
     weight: Optional[float]
+    
+
+class ChildBase(BaseModel):
+    name: str
+    birth_date: date
+    gender: Optional[str] = None
+    
+    
+class ChildResponse(ChildBase):
+    id: int
+    photo: Optional[str] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True 
