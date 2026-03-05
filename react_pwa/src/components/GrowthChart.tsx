@@ -1,8 +1,8 @@
 import { Line } from "react-chartjs-2"
-import type { Growth } from "../types/models"
+import type { GrowthType } from "../types/models"
 
 interface Props {
-  growth: Growth[]
+  growth: GrowthType[]
 }
 
 export default function GrowthChart({ growth }: Props) {

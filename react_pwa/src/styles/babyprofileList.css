@@ -1,0 +1,324 @@
+.baby-profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 30px;
+  min-height: 100vh;
+  background: white;
+}
+
+.baby-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.baby-profile-header h1 {
+  font-size: 28px;
+  color: #333;
+  font-weight: 700;
+}
+
+/* 로딩 상태 */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading p {
+  color: #999;
+  font-size: 14px;
+}
+
+/* 에러 상태 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 20px;
+  background: #fee;
+  border-radius: 12px;
+  padding: 30px;
+}
+
+.error-message {
+  color: #c33;
+  font-size: 16px;
+  text-align: center;
+}
+
+.retry-btn {
+  background: #c33;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+  background: #a22;
+  transform: translateY(-2px);
+}
+
+/* 아기 리스트 */
+.baby-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 빈 상태 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 20px;
+  padding: 40px;
+}
+
+.empty-icon {
+  font-size: 80px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.empty-state p {
+  color: #999;
+  font-size: 16px;
+}
+
+/* 아기 카드 */
+.baby-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.baby-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.baby-photo {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f5f7ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.baby-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  font-size: 40px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.baby-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.baby-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.baby-gender {
+  font-size: 13px;
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.baby-age {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.baby-birthdate {
+  font-size: 12px;
+  color: #999;
+}
+
+.card-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(102, 126, 234, 0.08);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.baby-card:hover .card-arrow {
+  background: rgba(102, 126, 234, 0.15);
+  transform: translateX(4px);
+}
+
+/* 추가 버튼 카드 */
+.add-baby-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  background: white;
+  border: 2px dashed #667eea;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #667eea;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  min-height: 100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.add-baby-card:hover {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.04) 0%, rgba(118, 75, 162, 0.02) 100%);
+  border-color: #764ba2;
+  color: #764ba2;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+}
+
+.add-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f5f7ff 100%);
+  border-radius: 12px;
+  color: #667eea;
+  transition: all 0.3s ease;
+}
+
+.add-baby-card:hover .add-icon {
+  background: rgba(102, 126, 234, 0.12);
+  transform: scale(1.1);
+}
+
+.add-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.add-text p {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.add-text span {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .baby-profile-container {
+    padding: 16px;
+  }
+
+  .baby-profile-header h1 {
+    font-size: 24px;
+  }
+
+  .baby-card {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .baby-photo {
+    width: 70px;
+    height: 70px;
+  }
+
+  .baby-name {
+    font-size: 16px;
+  }
+
+  .add-baby-card {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .add-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .add-text {
+    align-items: center;
+  }
+}
