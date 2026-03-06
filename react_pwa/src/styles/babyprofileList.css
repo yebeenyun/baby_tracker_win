@@ -1,10 +1,11 @@
+@import './theme.css';
+
 .baby-profile-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   padding-top: 30px;
-  min-height: 100vh;
-  background: white;
+  background: var(--white);
 }
 
 .baby-profile-header {
@@ -16,7 +17,7 @@
 
 .baby-profile-header h1 {
   font-size: 28px;
-  color: #333;
+  color: var(--gray-dark);
   font-weight: 700;
 }
 
@@ -49,7 +50,7 @@
 }
 
 .loading p {
-  color: #999;
+  color: var(--gray);
   font-size: 14px;
 }
 
@@ -61,20 +62,20 @@
   justify-content: center;
   min-height: 300px;
   gap: 20px;
-  background: #fee;
+  background: var(--accent-bg);
   border-radius: 12px;
   padding: 30px;
 }
 
 .error-message {
-  color: #c33;
+  color: var(--accent);
   font-size: 16px;
   text-align: center;
 }
 
 .retry-btn {
-  background: #c33;
-  color: white;
+  background: var(--accent);
+  color: var(--white);
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
@@ -123,7 +124,7 @@
 }
 
 .empty-state p {
-  color: #999;
+  color: var(--gray);
   font-size: 16px;
 }
 
@@ -133,19 +134,19 @@
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   text-decoration: none;
   color: inherit;
   transition: all 0.3s ease;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--primary-light);
 }
 
 .baby-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
-  border-color: #667eea;
+  border-color: var(--primary);
 }
 
 .baby-photo {
@@ -183,27 +184,27 @@
 .baby-name {
   font-size: 18px;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-dark);
   margin-bottom: 4px;
 }
 
 .baby-gender {
   font-size: 13px;
-  color: #667eea;
+  color: var(--primary);
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .baby-age {
   font-size: 14px;
-  color: #666;
+  color: var(--gray);
   margin-bottom: 4px;
   font-weight: 500;
 }
 
 .baby-birthdate {
   font-size: 12px;
-  color: #999;
+  color: var(--gray);
 }
 
 .card-arrow {
@@ -230,11 +231,11 @@
   justify-content: center;
   gap: 12px;
   padding: 20px;
-  background: white;
-  border: 2px dashed #667eea;
+  background: var(--white);
+  border: 2px dashed var(--primary);
   border-radius: 12px;
   text-decoration: none;
-  color: #667eea;
+  color: var(--primary);
   transition: all 0.3s ease;
   font-weight: 600;
   min-height: 100px;
@@ -243,8 +244,8 @@
 
 .add-baby-card:hover {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.04) 0%, rgba(118, 75, 162, 0.02) 100%);
-  border-color: #764ba2;
-  color: #764ba2;
+  border-color: var(--primary-dark);
+  color: var(--primary-dark);
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
 }
@@ -257,7 +258,7 @@
   height: 60px;
   background: linear-gradient(135deg, #f8f9ff 0%, #f5f7ff 100%);
   border-radius: 12px;
-  color: #667eea;
+  color: var(--primary);
   transition: all 0.3s ease;
 }
 
@@ -281,7 +282,7 @@
 
 .add-text span {
   font-size: 14px;
-  color: #999;
+  color: var(--gray);
 }
 
 /* 반응형 */

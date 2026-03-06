@@ -1,0 +1,22 @@
+@import './theme.css';
+
+/* Add your custom styles below */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+}
+
+a {
+    color: var(--link-color);
+}
+
+button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+/* ...existing styles... */

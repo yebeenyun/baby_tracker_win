@@ -1,0 +1,44 @@
+/* 기본 테마(파랑) */
+:root {
+  --primary: #ec4899;
+  --primary-dark: #be185d;
+  --primary-light: #fce7f3;
+  --primary-xlight: #fdf4fa;
+  --accent: #c026d3;
+  --accent-bg: #f9a8d4;
+  --accent-border: #f472b6;
+  --gray: #999;
+  --gray-dark: #333;
+  --gray-light: #f5f5f5;
+  --white: #fff;
+}
+
+/* 주황 테마 */
+.theme-orange {
+  --primary: #ff9800;
+  --primary-dark: #f57c00;
+  --primary-light: #fff3e0;
+  --primary-xlight: #fff8ed;
+  --accent: #d84315;
+  --accent-bg: #ffe0b2;
+  --accent-border: #ffcc80;
+  --gray: #999;
+  --gray-dark: #333;
+  --gray-light: #f5f5f5;
+  --white: #fff;
+}
+
+/* 파랑 테마 */
+.theme-blue {
+  --primary: #667eea;
+  --primary-dark: #764ba2;
+  --primary-light: #f0f0f0;
+  --primary-xlight: #f7f8fa;
+  --accent: #c33;
+  --accent-bg: #fee;
+  --accent-border: #fcc;
+  --gray: #999;
+  --gray-dark: #333;
+  --gray-light: #f5f5f5;
+  --white: #fff;
+}

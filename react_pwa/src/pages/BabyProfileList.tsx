@@ -128,13 +128,12 @@ export default function BabyProfileList() {
           )}
 
           {/* 추가 버튼 */}
-          <Link to="/profile/new" className="add-baby-card">
+          <Link to="/baby/new" className="add-baby-card">
             <div className="add-icon">
               <LuPlus size={40} />
             </div>
             <div className="add-text">
               <p>새로운 아기 추가</p>
-              <span>+</span>
             </div>
           </Link>
         </div>

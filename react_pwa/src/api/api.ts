@@ -117,6 +117,17 @@ export const createChild = async (formData: FormData): Promise<ChildType> => {
   return res.json()
 }
 
+export async function deleteChild(childId: number): Promise<void> {
+  const res = await fetch(`/api/child/${childId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.detail || '아기 삭제 실패')
+  }
+}
+
 /* ----------------- Feeding ----------------- */
 
 export async function getFeedings(childId: number): Promise<FeedingType[]> {

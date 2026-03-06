@@ -6,7 +6,7 @@ import { LuBaby } from "react-icons/lu"
 import { IoPersonCircleOutline } from "react-icons/io5"
 import "../styles/bottomnav.css"
 
-const IconSize = 50
+const IconSize = 30
 
 export default function BottomNav() {
   const location = useLocation()

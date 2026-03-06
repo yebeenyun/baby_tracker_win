@@ -1,8 +1,9 @@
+@import './theme.css';
+
 .baby-detail-container {
   max-width: 600px;
   margin: 0 auto;
-  background: white;
-  min-height: 100vh;
+  background: var(--white);
   display: flex;
   flex-direction: column;
 }
@@ -13,8 +14,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid #f0f0f0;
-  background: white;
+  border-bottom: 1px solid var(--primary-light);
+  background: var(--white);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -23,7 +24,7 @@
 .detail-header h1 {
   font-size: 18px;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-dark);
   flex: 1;
   text-align: center;
 }
@@ -32,7 +33,7 @@
 .edit-button {
   background: none;
   border: none;
-  color: #667eea;
+  color: var(--primary);
   cursor: pointer;
   padding: 8px;
   display: flex;
@@ -44,7 +45,7 @@
 
 .back-button:hover,
 .edit-button:hover {
-  background: rgba(102, 126, 234, 0.08);
+  background: rgba(102, 126, 234, 0.08); /* 유지: 투명도 컬러 */
   transform: scale(1.1);
 }
 
@@ -78,7 +79,7 @@
 }
 
 .loading p {
-  color: #999;
+  color: var(--gray);
   font-size: 14px;
 }
 
@@ -95,14 +96,14 @@
 }
 
 .error-message {
-  color: #c33;
+  color: var(--accent);
   font-size: 16px;
   text-align: center;
 }
 
 .back-btn {
-  background: #667eea;
-  color: white;
+  background: var(--primary);
+  color: var(--white);
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
@@ -113,7 +114,7 @@
 }
 
 .back-btn:hover {
-  background: #764ba2;
+  background: var(--primary-dark);
   transform: translateY(-2px);
 }
 
@@ -132,8 +133,8 @@
   border-radius: 50%;
   overflow: hidden;
   margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-  border: 4px solid white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2); /* 유지 */
+  border: 4px solid var(--white);
 }
 
 .profile-photo img {
@@ -148,7 +149,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: var(--white);
   font-size: 80px;
 }
 
@@ -159,13 +160,13 @@
 .child-name {
   font-size: 28px;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-dark);
   margin-bottom: 8px;
 }
 
 .child-gender {
   font-size: 16px;
-  color: #667eea;
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -178,11 +179,11 @@
 }
 
 .info-card {
-  background: white;
+  background: var(--white);
   border-radius: 12px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--primary-light);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -193,7 +194,7 @@
 .info-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(102, 126, 234, 0.12);
-  border-color: #667eea;
+  border-color: var(--primary);
 }
 
 .card-icon {
@@ -203,7 +204,7 @@
 
 .card-label {
   font-size: 12px;
-  color: #999;
+  color: var(--gray);
   margin-bottom: 4px;
   font-weight: 500;
 }
@@ -211,19 +212,19 @@
 .card-value {
   font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-dark);
 }
 
 /* 상세 정보 섹션 */
 .details-section {
   padding: 20px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--primary-light);
 }
 
 .details-section h3 {
   font-size: 16px;
   font-weight: 700;
-  color: #333;
+  color: var(--gray-dark);
   margin-bottom: 16px;
 }
 
@@ -232,7 +233,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--gray-light);
 }
 
 .detail-item:last-child {
@@ -241,13 +242,13 @@
 
 .detail-label {
   font-size: 14px;
-  color: #999;
+  color: var(--gray);
   font-weight: 500;
 }
 
 .detail-value {
   font-size: 14px;
-  color: #333;
+  color: var(--gray-dark);
   font-weight: 600;
 }
 
@@ -276,8 +277,8 @@
 }
 
 .edit-full-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--white);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
@@ -287,14 +288,98 @@
 }
 
 .delete-btn {
-  background: #fee;
-  color: #c33;
-  border: 1px solid #fcc;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
 }
 
 .delete-btn:hover {
   background: #fdd;
   transform: translateY(-2px);
+}
+
+.delete-btn.subtle {
+  background: #f7f7f7;
+  color: #bbb;
+  border: 1px solid #eee;
+  box-shadow: none;
+  font-weight: 500;
+  transition: border 0.2s, color 0.2s, background 0.2s;
+}
+
+.delete-btn.subtle:hover {
+  background: #ffeaea;
+  color: #e53e3e;
+  border: 1.5px solid #e53e3e;
+}
+
+/* 아기 선택 콤보박스 */
+.baby-switcher-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.baby-switcher-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: var(--white);
+  border: 2px solid var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 8px 36px 8px 16px;
+  min-width: 120px;
+  max-width: 200px;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.07);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23667eea" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+
+.baby-switcher-select:focus {
+  border: 2px solid var(--primary);
+}
+
+.baby-switcher-select:hover {
+  border: 2px solid var(--primary);
+}
+
+/* 삭제 모달 */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 28px 22px 28px;
+  min-width: 260px;
+  max-width: 90vw;
+  z-index: 2010;
+  position: relative;
+  animation: modalPop 0.18s cubic-bezier(.4,1.6,.6,1) both;
+}
+@keyframes modalPop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 2005;
 }
 
 /* 반응형 */

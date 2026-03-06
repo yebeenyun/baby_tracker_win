@@ -1,3 +1,5 @@
+@import './theme.css';
+
 nav {
   display: flex;
   justify-content: space-around;
@@ -7,8 +9,8 @@ nav {
   left: 0;
   right: 0;
   height: 70px;
-  background: white;
-  border-top: 1px solid #e0e0e0;
+  background: var(--white);
+  border-top: 1px solid var(--primary-light);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
@@ -19,19 +21,19 @@ nav a {
   justify-content: center;
   flex: 1;
   height: 100%;
-  color: #999;
+  color: var(--gray);
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
 }
 
 nav a:hover {
-  color: #667eea;
-  background-color: rgba(102, 126, 234, 0.05);
+  color: var(--primary);
+  background-color: var(--primary-xlight);
 }
 
 nav a.active {
-  color: #667eea;
+  color: var(--primary);
 }
 
 nav a svg {

@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { getChild } from "../api/api"
+import { useEffect, useState, useRef } from "react"
+import { getChild, getChildren, deleteChild } from "../api/api"
 import type { ChildType } from "../types/models"
 import { IoArrowBack } from "react-icons/io5"
 import { HiPencil } from "react-icons/hi2"
@@ -12,6 +12,27 @@ export default function BabyProfile() {
   const [child, setChild] = useState<ChildType | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [children, setChildren] = useState<ChildType[]>([])
+  const [childrenLoading, setChildrenLoading] = useState(true)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [deleteError, setDeleteError] = useState("")
+  const lastFocusedRef = useRef<HTMLButtonElement | null>(null)
+
+  // 아기 목록 조회
+  useEffect(() => {
+    ;(async () => {
+      try {
+        setChildrenLoading(true)
+        const res = await getChildren()
+        setChildren(res)
+      } catch {
+        setChildren([])
+      } finally {
+        setChildrenLoading(false)
+      }
+    })()
+  }, [])
 
   useEffect(() => {
     const fetchChild = async () => {
@@ -29,7 +50,7 @@ export default function BabyProfile() {
           setChild(result)
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "아기 정�� 조회 실패")
+        setError(err instanceof Error ? err.message : "아기 정보 조회 실패")
       } finally {
         setLoading(false)
       }
@@ -80,6 +101,21 @@ export default function BabyProfile() {
     return Math.ceil(diff / (1000 * 60 * 60 * 24))
   }
 
+  const handleDelete = async () => {
+    if (!babyId) return
+    setDeleteLoading(true)
+    setDeleteError("")
+    try {
+      await deleteChild(Number(babyId))
+      setShowDeleteModal(false)
+      navigate("/baby")
+    } catch (err) {
+      setDeleteError(err instanceof Error ? err.message : "삭제 실패")
+    } finally {
+      setDeleteLoading(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="baby-detail-container">
@@ -111,7 +147,30 @@ export default function BabyProfile() {
         <button onClick={() => navigate(-1)} className="back-button">
           <IoArrowBack size={24} />
         </button>
-        <h1>아기 정보</h1>
+        {/* 콤보박스: 아기 선택 */}
+        {childrenLoading ? (
+          <div style={{ flex: 1, textAlign: "center", color: "var(--gray)" }}>
+            아기 목록 불러오는 중...
+          </div>
+        ) : (
+          <div className="baby-switcher-wrap">
+            <select
+              className="baby-switcher-select"
+              value={babyId || ""}
+              onChange={e => {
+                if (e.target.value) navigate(`/baby/${e.target.value}`)
+              }}
+              aria-label="아기 선택"
+            >
+              {children.length === 0 && <option value="">아기 없음</option>}
+              {children.map(c => (
+                <option key={c.id} value={c.id}>
+                  👶 {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <button className="edit-button">
           <HiPencil size={24} />
         </button>
@@ -129,7 +188,9 @@ export default function BabyProfile() {
 
         <div className="profile-info">
           <h2 className="child-name">{child.name}</h2>
-          <p className="child-gender">{getGenderLabel(child.gender || "other")}</p>
+          <p className="child-gender">
+            {getGenderLabel(child.gender || "other")}
+          </p>
         </div>
       </div>
 
@@ -164,7 +225,9 @@ export default function BabyProfile() {
           <div className="card-icon">🎉</div>
           <div className="card-content">
             <p className="card-label">생일까지</p>
-            <p className="card-value">{getDaysUntilBirthday(child.birth_date)}일</p>
+            <p className="card-value">
+              {getDaysUntilBirthday(child.birth_date)}일
+            </p>
           </div>
         </div>
       </div>
@@ -178,7 +241,9 @@ export default function BabyProfile() {
         </div>
         <div className="detail-item">
           <span className="detail-label">성별</span>
-          <span className="detail-value">{getGenderLabel(child.gender || "other")}</span>
+          <span className="detail-value">
+            {getGenderLabel(child.gender || "other")}
+          </span>
         </div>
         <div className="detail-item">
           <span className="detail-label">생년월일</span>
@@ -200,8 +265,46 @@ export default function BabyProfile() {
           <HiPencil size={18} />
           정보 수정
         </button>
-        <button className="delete-btn">삭제</button>
+        <button
+          className="delete-btn subtle"
+          onClick={() => {
+            setShowDeleteModal(true)
+            lastFocusedRef.current = document.activeElement as HTMLButtonElement
+          }}
+        >
+          삭제
+        </button>
       </div>
+      {/* 삭제 확인 모달 */}
+      {showDeleteModal && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div style={{ marginBottom: 16, fontWeight: 600, fontSize: 17 }}>정말 삭제할까요?</div>
+            {deleteError && <div className="error-message" style={{ marginBottom: 8 }}>{deleteError}</div>}
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false)
+                  setDeleteError("")
+                  setTimeout(() => lastFocusedRef.current?.focus(), 0)
+                }}
+                style={{ padding: '8px 18px', borderRadius: 6, border: '1px solid #ccc', background: '#fff', color: '#666', fontWeight: 500 }}
+                disabled={deleteLoading}
+              >
+                취소
+              </button>
+              <button
+                onClick={handleDelete}
+                style={{ padding: '8px 18px', borderRadius: 6, border: 'none', background: '#e53e3e', color: '#fff', fontWeight: 600 }}
+                disabled={deleteLoading}
+              >
+                {deleteLoading ? '삭제 중...' : '삭제'}
+              </button>
+            </div>
+          </div>
+          <div className="modal-backdrop" onClick={() => setShowDeleteModal(false)} />
+        </div>
+      )}
     </div>
   )
 }
