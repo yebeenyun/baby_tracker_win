@@ -150,6 +150,17 @@ def get_child(child_id: int, db: Session = Depends(get_db)):
     return children[0]
 
 
+@app.delete("/child/{child_id}")
+def delete_child(child_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_child(db, child_id)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Child not found"
+        )
+    return {"message": "Child deleted successfully"}
+
+
 # Feeding
 @app.post("/feeding/")
 def create_feeding(data: schemas.FeedingCreate, db: Session = Depends(get_db)):

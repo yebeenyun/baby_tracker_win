@@ -87,6 +87,15 @@ def get_children(db: Session, child_id: Optional[int] = None, user_id: Optional[
     return query.all()
 
 
+def delete_child(db: Session, child_id: int) -> bool:
+    obj = db.query(Child).filter_by(id=child_id).first()
+    if not obj:
+        return False
+    db.delete(obj)
+    db.commit()
+    return True
+
+
 # Feeding
 def create_feeding(db: Session, data: schemas.FeedingCreate) -> Feeding:
     obj = Feeding(**data.dict())
