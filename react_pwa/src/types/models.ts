@@ -15,6 +15,7 @@ export interface ChildType {
   gender?: string
   photo?: string
   created_at: string
+  feedingInterval: number; // 수유 텀 (분 단위)
 }
 
 export interface FeedingType {

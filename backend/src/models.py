@@ -25,6 +25,7 @@ class Child(Base):
     gender = Column(String)
     photo = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
+    feeding_interval = Column(Integer, default=120)  # 수유 텀 (분 단위)
 
 
 class Feeding(Base):

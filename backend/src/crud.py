@@ -68,33 +68,36 @@ def delete_user(db: Session, user_id: int) -> bool:
     db.commit()
     return True
 
+def get_children(db: Session, user_id: int = None):
+    if user_id is None:
+        return db.query(Child).all()
+    return db.query(Child).filter(Child.user_id == user_id).all()
 
-# Child
-def create_child(db: Session, data: schemas.ChildCreate) -> Child:
-    obj = Child(**data.dict())
-    db.add(obj)
+def get_child(db: Session, child_id: int):
+    return db.query(Child).filter(Child.id == child_id).first()
+
+def create_child(db: Session, child: schemas.ChildCreate, user_id: int):
+    db_child = Child(**child.dict(), user_id=user_id)
+    db.add(db_child)
     db.commit()
-    db.refresh(obj)
-    return obj
+    db.refresh(db_child)
+    return db_child
 
+def update_child(db: Session, child_id: int, child_update: schemas.ChildCreate):
+    db_child = db.query(Child).filter(Child.id == child_id).first()
+    if db_child:
+        for key, value in child_update.dict(exclude_unset=True).items():
+            setattr(db_child, key, value)
+        db.commit()
+        db.refresh(db_child)
+    return db_child
 
-def get_children(db: Session, child_id: Optional[int] = None, user_id: Optional[int] = None) -> list[Child]:
-    query = db.query(Child)
-    if child_id is not None:
-        query = query.filter_by(id=child_id)
-    if user_id is not None:
-        query = query.filter_by(user_id=user_id)
-    return query.all()
-
-
-def delete_child(db: Session, child_id: int) -> bool:
-    obj = db.query(Child).filter_by(id=child_id).first()
-    if not obj:
-        return False
-    db.delete(obj)
-    db.commit()
-    return True
-
+def delete_child(db: Session, child_id: int):
+    db_child = db.query(Child).filter(Child.id == child_id).first()
+    if db_child:
+        db.delete(db_child)
+        db.commit()
+    return db_child
 
 # Feeding
 def create_feeding(db: Session, data: schemas.FeedingCreate) -> Feeding:
@@ -108,6 +111,25 @@ def create_feeding(db: Session, data: schemas.FeedingCreate) -> Feeding:
 def get_feedings(db: Session, child_id: int) -> list[Feeding]:
     return db.query(Feeding).filter_by(child_id=child_id).all()
 
+
+def update_feeding(db: Session, feeding_id: int, data: schemas.FeedingCreate) -> Optional[Feeding]:
+    obj = db.query(Feeding).filter_by(id=feeding_id).first()
+    if not obj:
+        return None
+    for key, value in data.dict(exclude_unset=True).items():
+        setattr(obj, key, value)
+    db.commit()
+    db.refresh(obj)
+    return obj
+
+
+def delete_feeding(db: Session, feeding_id: int) -> bool:
+    obj = db.query(Feeding).filter_by(id=feeding_id).first()
+    if not obj:
+        return False
+    db.delete(obj)
+    db.commit()
+    return True
 
 # Excretion
 def create_excretion(db: Session, data: schemas.ExcretionCreate) -> Excretion:

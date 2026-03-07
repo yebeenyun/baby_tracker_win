@@ -1,5 +1,6 @@
 from datetime import datetime
 import os
+from typing import Optional
 from uuid import uuid4
 from fastapi import FastAPI, Depends, File, Form, UploadFile, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -101,6 +102,7 @@ async def create_child(
     name: str = Form(...),
     birth_date: str = Form(...),
     gender: str = Form(None),
+    feeding_interval: int = Form(120),
     photo: UploadFile = File(None),
     db: Session = Depends(get_db),
 ):
@@ -125,6 +127,7 @@ async def create_child(
         birth_date=datetime.strptime(birth_date, "%Y-%m-%d").date(),
         gender=gender,
         photo=photo_path,
+        feeding_interval=feeding_interval,
     )
 
     db.add(child)
@@ -135,19 +138,19 @@ async def create_child(
 
 
 @app.get("/child/")
-def get_children(user_id: int = None, db: Session = Depends(get_db)):
+def get_children(user_id: Optional[int] = None, db: Session = Depends(get_db)):
     return crud.get_children(db, user_id=user_id)
 
 
 @app.get("/child/{child_id}", response_model=schemas.ChildResponse)
 def get_child(child_id: int, db: Session = Depends(get_db)):
-    children = crud.get_children(db, child_id=child_id)
-    if not children:
+    child = crud.get_child(db, child_id=child_id)
+    if not child:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Child not found"
         )
-    return children[0]
+    return child
 
 
 @app.delete("/child/{child_id}")
@@ -161,10 +164,68 @@ def delete_child(child_id: int, db: Session = Depends(get_db)):
     return {"message": "Child deleted successfully"}
 
 
+@app.get("/child/{child_id}/next_feeding_time")
+def get_next_feeding_time(child_id: int, db: Session = Depends(get_db)):
+    child = crud.get_child(db, child_id)
+    if not child:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Child not found"
+        )
+    
+    feedings = crud.get_feedings(db, child_id)
+    if not feedings:
+        return {"message": "No feeding data", "remaining_time": None}
+    
+    last_feeding = max(feedings, key=lambda f: f.date_time)
+    last_feeding_time = last_feeding.date_time
+    next_feeding_time = last_feeding_time + timedelta(minutes=child.feeding_interval)
+    current_time = datetime.utcnow()
+    
+    if next_feeding_time <= current_time:
+        return {"message": "Time to feed!", "remaining_time": "0m 0s", "next_feeding": next_feeding_time.isoformat()}
+    
+    diff = next_feeding_time - current_time
+    minutes = diff.seconds // 60
+    seconds = diff.seconds % 60
+    remaining_time = f"{minutes}m {seconds}s"
+    
+    return {
+        "remaining_time": remaining_time,
+        "next_feeding": next_feeding_time.isoformat()
+    }
+
 # Feeding
 @app.post("/feeding/")
 def create_feeding(data: schemas.FeedingCreate, db: Session = Depends(get_db)):
     return crud.create_feeding(db, data)
+
+
+@app.get("/feeding/{child_id}")
+def get_feedings(child_id: int, db: Session = Depends(get_db)):
+    return crud.get_feedings(db, child_id)
+
+
+@app.put("/feeding/{feeding_id}")
+def update_feeding(feeding_id: int, data: schemas.FeedingCreate, db: Session = Depends(get_db)):
+    feeding = crud.update_feeding(db, feeding_id, data)
+    if not feeding:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Feeding not found"
+        )
+    return feeding
+
+
+@app.delete("/feeding/{feeding_id}")
+def delete_feeding(feeding_id: int, db: Session = Depends(get_db)):
+    success = crud.delete_feeding(db, feeding_id)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Feeding not found"
+        )
+    return {"message": "Feeding deleted successfully"}
 
 
 @app.get("/feeding/{child_id}")

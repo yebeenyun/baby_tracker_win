@@ -12,6 +12,7 @@ export default function BabyProfileForm() {
     birth_date: "",
     gender: "male",
     photo: null as File | null,
+    feeding_interval: 120,
   })
   const [preview, setPreview] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -21,7 +22,7 @@ export default function BabyProfileForm() {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === 'feeding_interval' ? parseInt(value) || 120 : value,
     }))
   }
 
@@ -64,6 +65,7 @@ export default function BabyProfileForm() {
       form.append("name", formData.name)
       form.append("birth_date", formData.birth_date)
       form.append("gender", formData.gender)
+      form.append("feeding_interval", formData.feeding_interval.toString())
       if (formData.photo) {
         form.append("photo", formData.photo)
       }
@@ -156,6 +158,22 @@ export default function BabyProfileForm() {
               <option value="female">여아</option>
               <option value="other">기타</option>
             </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="feeding_interval">수유 텀 (분)</label>
+            <input
+              id="feeding_interval"
+              type="number"
+              name="feeding_interval"
+              placeholder="수유 간격을 분 단위로 입력하세요"
+              value={formData.feeding_interval}
+              onChange={handleChange}
+              min="30"
+              max="480"
+              required
+            />
+            <small>기본값: 120분 (2시간)</small>
           </div>
 
           {error && <div className="error-message">{error}</div>}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { FaUser, FaEnvelope, FaCalendar, FaPalette } from 'react-icons/fa'
 
 // 사용자 정보 예시 (실제 데이터 연동 시 props 또는 context 사용)
 const mockUser = {
@@ -17,13 +18,22 @@ function ThemeSelector() {
     }
   }, [theme])
   return (
-    <div style={{ marginTop: 24 }}>
-      <label htmlFor="theme-select" style={{ marginRight: 8 }}>테마 선택:</label>
+    <div>
       <select
         id="theme-select"
         value={theme}
         onChange={e => setTheme(e.target.value)}
-        style={{ padding: 6, borderRadius: 6 }}
+        style={{ 
+          width: '100%', 
+          padding: '12px', 
+          borderRadius: '8px', 
+          border: '2px solid var(--primary-light)', 
+          backgroundColor: 'var(--white)', 
+          color: 'var(--primary-dark)', 
+          fontSize: '16px',
+          cursor: 'pointer',
+          transition: 'border-color 0.3s'
+        }}
         aria-label="테마 선택"
       >
         <option value="">핑크 테마</option>
@@ -36,18 +46,80 @@ function ThemeSelector() {
 
 export default function Profile() {
   return (
-    <div style={{ maxWidth: 360, margin: '40px auto 0 auto' }}>
-      <h2 style={{ marginBottom: 20, color: 'var(--primary)', fontSize: 22 }}>내 프로필</h2>
-      <div style={{ marginBottom: 10 }}>
-        <strong>이름:</strong> {mockUser.name}
+    <div style={{ 
+      maxWidth: 400, 
+      margin: '40px auto 0 auto', 
+      padding: '20px',
+      backgroundColor: 'var(--primary-xlight)', 
+      borderRadius: '15px', 
+      boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
+      minHeight: '60vh'
+    }}>
+      <h2 style={{ 
+        marginBottom: 30, 
+        color: 'var(--primary-dark)', 
+        fontSize: 28, 
+        textAlign: 'center',
+        fontWeight: 'bold'
+      }}>
+        내 프로필
+      </h2>
+      
+      <div style={{ 
+        backgroundColor: 'var(--white)', 
+        padding: '20px', 
+        borderRadius: '10px', 
+        marginBottom: 20,
+        boxShadow: '0 4px 8px rgba(0,0,0,0.05)'
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: 15,
+          padding: '10px 0'
+        }}>
+          <FaUser style={{ color: 'var(--primary)', marginRight: 15, fontSize: 20 }} />
+          <div>
+            <strong style={{ color: 'var(--primary-dark)' }}>이름:</strong> {mockUser.name}
+          </div>
+        </div>
+        
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: 15,
+          padding: '10px 0'
+        }}>
+          <FaEnvelope style={{ color: 'var(--primary)', marginRight: 15, fontSize: 20 }} />
+          <div>
+            <strong style={{ color: 'var(--primary-dark)' }}>이메일:</strong> {mockUser.email}
+          </div>
+        </div>
+        
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          padding: '10px 0'
+        }}>
+          <FaCalendar style={{ color: 'var(--primary)', marginRight: 15, fontSize: 20 }} />
+          <div>
+            <strong style={{ color: 'var(--primary-dark)' }}>가입일:</strong> {mockUser.joined}
+          </div>
+        </div>
       </div>
-      <div style={{ marginBottom: 10 }}>
-        <strong>이메일:</strong> {mockUser.email}
+      
+      <div style={{ 
+        backgroundColor: 'var(--white)', 
+        padding: '20px', 
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.05)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 15 }}>
+          <FaPalette style={{ color: 'var(--primary)', marginRight: 10, fontSize: 20 }} />
+          <strong style={{ color: 'var(--primary-dark)', fontSize: 18 }}>테마 선택</strong>
+        </div>
+        <ThemeSelector />
       </div>
-      <div style={{ marginBottom: 18 }}>
-        <strong>가입일:</strong> {mockUser.joined}
-      </div>
-      <ThemeSelector />
     </div>
   )
 }
